@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/indigo_500</color>
+    <color name="colorPrimaryDark">@color/indigo_700</color>
+    <color name="colorAccent">@color/pink_200</color>
+
+    <color name="teal_500">#009687</color>
+    <color name="blue_grey_500">#607d8b</color>
+    <color name="blue_grey_700">#455a64</color>
+    <color name="indigo_500">#3f51b5</color>
+    <color name="indigo_700">#303f9f</color>
+    <color name="pink_200">#ff4081</color>
+</resources>
