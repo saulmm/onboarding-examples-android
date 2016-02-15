@@ -10,4 +10,5 @@
     <color name="indigo_500">#3f51b5</color>
     <color name="indigo_700">#303f9f</color>
     <color name="pink_200">#ff4081</color>
+    <color name="grey">#E2E2E2</color>
 </resources>
