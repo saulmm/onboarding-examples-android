@@ -12,16 +12,16 @@
         <activity
             android:name=".OnboardingWithPlaceholderActivity"
             android:theme="@style/AppTheme.CenterAnimation">
-        </activity>
-
-        <activity
-            android:name=".OnboardingWithCenterAnimationActivity"
-            android:theme="@style/AppTheme.Placeholder">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".OnboardingWithCenterAnimationActivity"
+            android:theme="@style/AppTheme.Placeholder">
         </activity>
 
         <activity

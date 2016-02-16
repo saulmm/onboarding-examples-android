@@ -78,7 +78,7 @@ public class OnboardingWithPlaceholderActivity extends AppCompatActivity {
 
 
     private void collapseToolbar() {
-        int toolBarHeight = 0;
+        int toolBarHeight;
         TypedValue tv = new TypedValue();
         getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true);
         toolBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
