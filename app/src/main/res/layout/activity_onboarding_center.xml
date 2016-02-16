@@ -75,7 +75,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="12dp"
-        android:contentDescription="@string/app_name"
         android:src="@drawable/img_face"
         tools:visibility="gone"
         />
