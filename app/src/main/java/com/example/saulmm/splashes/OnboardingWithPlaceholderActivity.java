@@ -11,28 +11,23 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.transition.Fade;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.saulmm.splashes.itemanimator.ItemAnimatorFactory;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class OnboardingWithPlaceholderActivity extends AppCompatActivity {
     private int mContentViewHeight;
     private Toolbar mToolbar;
-    private RecyclerView mRecyclerView;
-    public RecyclerAdapter mAdapter;
+    private RecyclerAdapter mAdapter;
     private View mFab;
 
     @Override
@@ -50,19 +45,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onFakeCreate() {
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_onboarding_placeholder);
 
         TextView titleTextView = (TextView) findViewById(R.id.text_title);
         ViewCompat.animate(titleTextView).alpha(1).start();
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);
         mFab = findViewById(R.id.fab);
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setItemAnimator(ItemAnimatorFactory.slidein());
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setItemAnimator(ItemAnimatorFactory.slidein());
 
         mAdapter = new RecyclerAdapter();
-        mRecyclerView.setAdapter(mAdapter);
+        recyclerView.setAdapter(mAdapter);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.getViewTreeObserver().addOnPreDrawListener(
@@ -75,23 +70,19 @@ public class MainActivity extends AppCompatActivity {
 
                     mToolbar.measure(widthSpec, heightSpec);
                     mContentViewHeight = mToolbar.getHeight();
-                    collapseFilterView();
+                    collapseToolbar();
                     return true;
                 }
             });
     }
 
 
-    private void collapseFilterView() {
-
-        int actionBarHeight = 0;
+    private void collapseToolbar() {
+        int toolBarHeight = 0;
         TypedValue tv = new TypedValue();
-        if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true))
-        {
-            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
-        }
-
-        ValueAnimator valueHeightAnimator = ValueAnimator.ofInt(mContentViewHeight, actionBarHeight);
+        getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true);
+        toolBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
+        ValueAnimator valueHeightAnimator = ValueAnimator.ofInt(mContentViewHeight, toolBarHeight);
         valueHeightAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -107,8 +98,12 @@ public class MainActivity extends AppCompatActivity {
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
 
+                // Fire item animator
                 mAdapter.addAll(ModelItem.getFakeItems());
-                ViewCompat.animate(mFab).setStartDelay(600).setDuration(400).scaleY(1).scaleX(1).start();
+
+                // Animate fab
+                ViewCompat.animate(mFab).setStartDelay(600)
+                    .setDuration(400).scaleY(1).scaleX(1).start();
 
             }
         });
@@ -126,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
         public void addAll(List<ModelItem> items) {
             int pos = getItemCount();
             mItems.addAll(items);
-
             notifyItemRangeInserted(pos, mItems.size());
         }
 
@@ -152,7 +146,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             public void bind(int position) {
-                mImageView.setImageBitmap(BitmapFactory.decodeResource(getResources(), mItems.get(position).getImgId()));
+                mImageView.setImageBitmap(BitmapFactory.decodeResource(
+                    getResources(), mItems.get(position).getImgId()));
                 mTitleTextView.setText(mItems.get(position).getAuthor());
             }
         }

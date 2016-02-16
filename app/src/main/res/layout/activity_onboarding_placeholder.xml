@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:background="@color/grey"
         android:orientation="vertical"
-        tools:context="com.example.saulmm.splashes.MainActivity"
+        tools:context=".OnboardingWithPlaceholderActivity"
         >
 
         <android.support.v7.widget.Toolbar
@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:alpha="0"
-                android:text="This is a test"
+                android:text="Cold starts are evil!"
                 android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
                 />
 

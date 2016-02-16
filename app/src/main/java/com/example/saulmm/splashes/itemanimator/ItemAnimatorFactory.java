@@ -9,8 +9,8 @@ import android.view.animation.DecelerateInterpolator;
 public class ItemAnimatorFactory {
 
     static public RecyclerView.ItemAnimator slidein() {
-        SlideInUpDelayedAnimator animator = new SlideInUpDelayedAnimator(new DecelerateInterpolator(3f));
-        animator.setAddDuration(700);
+        SlideInUpDelayedAnimator animator = new SlideInUpDelayedAnimator(new DecelerateInterpolator(1.2f));
+        animator.setAddDuration(600);
         return animator;
     }
 }

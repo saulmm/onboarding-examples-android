@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 
-public class OnboardingActivity extends AppCompatActivity {
+public class OnboardingWithCenterAnimationActivity extends AppCompatActivity {
     public static final int STARTUP_DELAY = 300;
     public static final int ANIM_ITEM_DURATION = 1000;
     public static final int ITEM_DELAY = 300;
@@ -20,7 +20,7 @@ public class OnboardingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_onboarding);
+        setContentView(R.layout.activity_onboarding_center);
 
         ImageView logoImageView = (ImageView) findViewById(R.id.img_logo);
         ViewGroup container = (ViewGroup) findViewById(R.id.container);
