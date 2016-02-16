@@ -7,12 +7,17 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme.Splash">
-        <item name="android:windowBackground">@drawable/ll_onboarding</item>
+    <style name="AppTheme.Placeholder">
+        <item name="android:windowBackground">@drawable/ll_face_logo</item>
     </style>
 
-    <style name="AppTheme.Main">
+    <style name="AppTheme.CenterAnimation">
         <item name="android:windowBackground">@drawable/ll_toolbar_placeholder</item>
     </style>
+
+    <style name="AppTheme.Simple">
+        <item name="android:windowBackground">@drawable/ll_pizza_logo</item>
+    </style>
+
 
 </resources>

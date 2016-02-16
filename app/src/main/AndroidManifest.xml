@@ -9,18 +9,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".OnboardingWithPlaceholderActivity"
-                  android:theme="@style/AppTheme.Main">
+        <activity
+            android:name=".OnboardingWithPlaceholderActivity"
+            android:theme="@style/AppTheme.CenterAnimation">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity android:name=".OnboardingWithCenterAnimationActivity"
-                  android:theme="@style/AppTheme.Splash">
-
+        <activity
+            android:name=".OnboardingWithCenterAnimationActivity"
+            android:theme="@style/AppTheme.Placeholder">
         </activity>
+
+        <activity
+            android:name=".OnBoardingWithSimpleBackground"
+            android:theme="@style/AppTheme.Simple"/>
     </application>
 
 </manifest>
