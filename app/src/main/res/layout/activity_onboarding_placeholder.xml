@@ -32,8 +32,6 @@
                 android:text="Cold starts are evil!"
                 android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
                 />
-
-
         </android.support.v7.widget.Toolbar>
 
 
