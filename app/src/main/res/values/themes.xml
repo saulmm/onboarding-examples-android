@@ -8,11 +8,11 @@
     </style>
 
     <style name="AppTheme.Placeholder">
-        <item name="android:windowBackground">@drawable/ll_face_logo</item>
+        <item name="android:windowBackground">@drawable/ll_toolbar_placeholder</item>
     </style>
 
     <style name="AppTheme.CenterAnimation">
-        <item name="android:windowBackground">@drawable/ll_toolbar_placeholder</item>
+        <item name="android:windowBackground">@drawable/ll_face_logo</item>
     </style>
 
     <style name="AppTheme.Simple">
