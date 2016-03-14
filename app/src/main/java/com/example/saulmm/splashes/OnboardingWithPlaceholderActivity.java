@@ -45,6 +45,7 @@ public class OnboardingWithPlaceholderActivity extends AppCompatActivity {
     }
 
     private void onFakeCreate() {
+        setTheme(R.style.AppTheme);
         setContentView(R.layout.activity_onboarding_placeholder);
 
         TextView titleTextView = (TextView) findViewById(R.id.text_title);

@@ -17,11 +17,30 @@ public class OnboardingWithCenterAnimationActivity extends AppCompatActivity {
     public static final int ANIM_ITEM_DURATION = 1000;
     public static final int ITEM_DELAY = 300;
 
+    private boolean animationStarted = false;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboarding_center);
+    }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+
+        if (!hasFocus || animationStarted) {
+            return;
+        }
+
+        animate();
+
+        super.onWindowFocusChanged(hasFocus);
+    }
+
+    private void animate() {
         ImageView logoImageView = (ImageView) findViewById(R.id.img_logo);
         ViewGroup container = (ViewGroup) findViewById(R.id.container);
 

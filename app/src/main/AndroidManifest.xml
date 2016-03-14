@@ -11,7 +11,7 @@
 
         <activity
             android:name=".OnboardingWithPlaceholderActivity"
-            android:theme="@style/AppTheme.CenterAnimation">
+            android:theme="@style/AppTheme.Placeholder">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -21,7 +21,7 @@
 
         <activity
             android:name=".OnboardingWithCenterAnimationActivity"
-            android:theme="@style/AppTheme.Placeholder">
+            android:theme="@style/AppTheme.CenterAnimation">
         </activity>
 
         <activity
