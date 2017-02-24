@@ -26,8 +26,8 @@ import java.util.List;
 
 public class OnboardingWithPlaceholderActivity extends AppCompatActivity {
     private int mContentViewHeight;
-    private Toolbar mToolbar;
     private RecyclerAdapter mAdapter;
+    private Toolbar mToolbar;
     private View mFab;
 
     @Override
@@ -61,22 +61,11 @@ public class OnboardingWithPlaceholderActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.getViewTreeObserver().addOnPreDrawListener(
-            new ViewTreeObserver.OnPreDrawListener() {
-                @Override
-                public boolean onPreDraw() {
-                    mToolbar.getViewTreeObserver().removeOnPreDrawListener(this);
-                    final int widthSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-                    final int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-
-                    mToolbar.measure(widthSpec, heightSpec);
-                    mContentViewHeight = mToolbar.getHeight();
-                    collapseToolbar();
-                    return true;
-                }
-            });
+        mToolbar.post(() -> {
+            mContentViewHeight = mToolbar.getHeight();
+            collapseToolbar();
+        });
     }
-
 
     private void collapseToolbar() {
         int toolBarHeight;
@@ -84,13 +73,11 @@ public class OnboardingWithPlaceholderActivity extends AppCompatActivity {
         getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true);
         toolBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
         ValueAnimator valueHeightAnimator = ValueAnimator.ofInt(mContentViewHeight, toolBarHeight);
-        valueHeightAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                ViewGroup.LayoutParams lp = mToolbar.getLayoutParams();
-                lp.height = (Integer) animation.getAnimatedValue();
-                mToolbar.setLayoutParams(lp);
-            }
+
+        valueHeightAnimator.addUpdateListener(animation -> {
+            ViewGroup.LayoutParams lp = mToolbar.getLayoutParams();
+            lp.height = (Integer) animation.getAnimatedValue();
+            mToolbar.setLayoutParams(lp);
         });
 
         valueHeightAnimator.start();
@@ -103,14 +90,17 @@ public class OnboardingWithPlaceholderActivity extends AppCompatActivity {
                 mAdapter.addAll(ModelItem.getFakeItems());
 
                 // Animate fab
-                ViewCompat.animate(mFab).setStartDelay(600)
-                    .setDuration(400).scaleY(1).scaleX(1).start();
-
+                ViewCompat.animate(mFab)
+                    .setStartDelay(600)
+                    .setDuration(400)
+                    .scaleY(1)
+                    .scaleX(1)
+                    .start();
             }
         });
     }
 
-    class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder> {
+    private static class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder> {
         private ArrayList<ModelItem> mItems = new ArrayList<>();
 
         @Override
@@ -119,7 +109,7 @@ public class OnboardingWithPlaceholderActivity extends AppCompatActivity {
             return new RecyclerViewHolder(v);
         }
 
-        public void addAll(List<ModelItem> items) {
+        void addAll(List<ModelItem> items) {
             int pos = getItemCount();
             mItems.addAll(items);
             notifyItemRangeInserted(pos, mItems.size());
@@ -127,7 +117,7 @@ public class OnboardingWithPlaceholderActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(RecyclerViewHolder holder, int position) {
-            holder.bind(position);
+            holder.bind(mItems.get(position));
         }
 
         @Override
@@ -136,23 +126,21 @@ public class OnboardingWithPlaceholderActivity extends AppCompatActivity {
         }
 
 
-        class RecyclerViewHolder extends RecyclerView.ViewHolder {
+        private static class RecyclerViewHolder extends RecyclerView.ViewHolder {
             private TextView mTitleTextView;
             private ImageView mImageView;
 
-            public RecyclerViewHolder(View itemView) {
+            RecyclerViewHolder(View itemView) {
                 super(itemView);
                 mTitleTextView = (TextView) itemView.findViewById(R.id.text_title);
                 mImageView = (ImageView) itemView.findViewById(R.id.img_sampleimage);
             }
 
-            public void bind(int position) {
+            void bind(ModelItem modelItem) {
                 mImageView.setImageBitmap(BitmapFactory.decodeResource(
-                    getResources(), mItems.get(position).getImgId()));
-                mTitleTextView.setText(mItems.get(position).getAuthor());
+                    itemView.getResources(), modelItem.getImgId()));
+                mTitleTextView.setText(modelItem.getAuthor());
             }
         }
-
     }
-
 }

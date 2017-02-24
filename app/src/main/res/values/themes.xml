@@ -19,6 +19,4 @@
     <style name="AppTheme.Simple">
         <item name="android:windowBackground">@drawable/ll_pizza_logo</item>
     </style>
-
-
 </resources>
