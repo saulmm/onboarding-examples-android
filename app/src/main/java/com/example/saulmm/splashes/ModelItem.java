@@ -18,24 +18,17 @@ package com.example.saulmm.splashes;
 import java.util.ArrayList;
 import java.util.List;
 
-class ModelItem {
-    private String author;
-    private int imgId;
+@SuppressWarnings("WeakerAccess")
+public class ModelItem {
+    public final String author;
+    public final int imgId;
 
-    private ModelItem(String author, int imgId) {
+    public  ModelItem(String author, int imgId) {
         this.author = author;
         this.imgId = imgId;
     }
 
-    int getImgId() {
-        return imgId;
-    }
-
-    String getAuthor() {
-        return author;
-    }
-
-    static List<ModelItem> getFakeItems() {
+    static List<ModelItem> fakeItems() {
         ArrayList<ModelItem> itemsList = new ArrayList<>();
         itemsList.add(new ModelItem("Prasad A.", R.drawable.img_prasad));
         itemsList.add(new ModelItem("Besim  Mazhiqi", R.drawable.img_besim));

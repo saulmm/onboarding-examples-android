@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Splashes</string>
     <string name="activity_placeholder_title">Cold starts are evil!</string>
+    <string name="message_500px_credit">Provided by 500px</string>
+    <string name="message_title_placeholder">Title goes here</string>
 </resources>

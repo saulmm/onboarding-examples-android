@@ -21,8 +21,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.animation.Interpolator;
 
 
+@SuppressWarnings("FieldCanBeLocal")
 class SlideInUpDelayedAnimator extends BaseItemAnimator {
-
+    private final int offsetDelay = 200;
     private final Interpolator mInterpolator;
 
     SlideInUpDelayedAnimator(Interpolator interpolator) {
@@ -37,10 +38,9 @@ class SlideInUpDelayedAnimator extends BaseItemAnimator {
 
     @Override
     protected ViewPropertyAnimatorCompat onAnimatedAdd(RecyclerView.ViewHolder holder) {
-        int offsetDelay = 50;
         return ViewCompat.animate(holder.itemView)
                 .translationY(0)
                 .setInterpolator(mInterpolator)
-                .setStartDelay(offsetDelay *holder.getLayoutPosition());
+                .setStartDelay(offsetDelay*holder.getLayoutPosition());
     }
 }

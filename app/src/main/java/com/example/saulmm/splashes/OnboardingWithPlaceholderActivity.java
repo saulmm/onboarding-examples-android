@@ -35,23 +35,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.saulmm.splashes.databinding.ActivityOnboardingPlaceholderBinding;
+import com.example.saulmm.splashes.databinding.ItemCardBinding;
 import com.example.saulmm.splashes.itemanimator.ItemAnimatorFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class OnboardingWithPlaceholderActivity extends AppCompatActivity {
-    private final RecyclerAdapter mAdapter = new RecyclerAdapter();
     private int mContentViewHeight;
 
     private ActivityOnboardingPlaceholderBinding mBinding;
+    private RecyclerAdapter mAdapter = new RecyclerAdapter();;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Fake a long startup time
-        new Handler().postDelayed(this::onFakeCreate, 500);
+        new Handler().postDelayed(this::onFakeCreate, getResources()
+            .getInteger(android.R.integer.config_mediumAnimTime));
     }
 
     private void onFakeCreate() {
@@ -72,13 +74,13 @@ public class OnboardingWithPlaceholderActivity extends AppCompatActivity {
             mContentViewHeight = mBinding.toolbar.getHeight();
 
             startCollapseToolbarAnimation(() -> {
-                // Fire item animator
-                mAdapter.addAll(ModelItem.getFakeItems());
+                // Fire the recycler's ItemAnimator
+                mAdapter.addAll(ModelItem.fakeItems());
 
                 // Animate fab
                 ViewCompat.animate(mBinding.fab)
-                    .setStartDelay(600)
-                    .setDuration(400)
+                    .setStartDelay(getResources().getInteger(android.R.integer.config_mediumAnimTime))
+                    .setDuration(getResources().getInteger(android.R.integer.config_shortAnimTime))
                     .scaleY(1)
                     .scaleX(1)
                     .start();
@@ -107,13 +109,15 @@ public class OnboardingWithPlaceholderActivity extends AppCompatActivity {
         valueHeightAnimator.start();
     }
 
-    private static class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder> {
-        private final ArrayList<ModelItem> mItems = new ArrayList<>();
+    static class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder> {
+        private final List<ModelItem> mItems = new ArrayList<>();
 
         @Override
         public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_card, parent, false);
-            return new RecyclerViewHolder(v);
+            final ItemCardBinding binding = ItemCardBinding.inflate(LayoutInflater
+                .from(parent.getContext()), parent, false);
+
+            return new RecyclerViewHolder(binding);
         }
 
         void addAll(List<ModelItem> items) {
@@ -133,20 +137,17 @@ public class OnboardingWithPlaceholderActivity extends AppCompatActivity {
         }
 
 
-        private static class RecyclerViewHolder extends RecyclerView.ViewHolder {
-            private TextView mTitleTextView;
-            private ImageView mImageView;
+        static class RecyclerViewHolder extends RecyclerView.ViewHolder {
+            private final ItemCardBinding mBinding;
 
-            RecyclerViewHolder(View itemView) {
-                super(itemView);
-                mTitleTextView = (TextView) itemView.findViewById(R.id.text_title);
-                mImageView = (ImageView) itemView.findViewById(R.id.img_sampleimage);
+            RecyclerViewHolder(ItemCardBinding binding) {
+                super(binding.getRoot());
+                mBinding = binding;
             }
 
             void bind(ModelItem modelItem) {
-                mImageView.setImageBitmap(BitmapFactory.decodeResource(
-                    itemView.getResources(), modelItem.getImgId()));
-                mTitleTextView.setText(modelItem.getAuthor());
+                mBinding.setItem(modelItem);
+                mBinding.imgSampleimage.setImageResource(modelItem.imgId);
             }
         }
     }
