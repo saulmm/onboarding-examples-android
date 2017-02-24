@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Splashes</string>
+    <string name="activity_placeholder_title">Cold starts are evil!</string>
 </resources>
