@@ -15,16 +15,17 @@
  */
 package com.example.saulmm.splashes.itemanimator;
 
-import android.support.v4.animation.AnimatorCompatHelper;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPropertyAnimatorCompat;
-import android.support.v4.view.ViewPropertyAnimatorListener;
-import android.support.v7.widget.RecyclerView.ViewHolder;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.view.View;
+
+import androidx.core.view.ViewCompat;
+import androidx.core.view.ViewPropertyAnimatorCompat;
+import androidx.core.view.ViewPropertyAnimatorListener;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 
 abstract public class BaseItemAnimator extends SimpleItemAnimator {
@@ -43,49 +44,6 @@ abstract public class BaseItemAnimator extends SimpleItemAnimator {
     private ArrayList<ViewHolder> mMoveAnimations = new ArrayList<>();
     private ArrayList<ViewHolder> mRemoveAnimations = new ArrayList<>();
     private ArrayList<ViewHolder> mChangeAnimations = new ArrayList<>();
-
-    private static class MoveInfo {
-        public ViewHolder holder;
-        public int fromX, fromY, toX, toY;
-
-        private MoveInfo(ViewHolder holder, int fromX, int fromY, int toX, int toY) {
-            this.holder = holder;
-            this.fromX = fromX;
-            this.fromY = fromY;
-            this.toX = toX;
-            this.toY = toY;
-        }
-    }
-
-    private static class ChangeInfo {
-        public ViewHolder oldHolder, newHolder;
-        public int fromX, fromY, toX, toY;
-        private ChangeInfo(ViewHolder oldHolder, ViewHolder newHolder) {
-            this.oldHolder = oldHolder;
-            this.newHolder = newHolder;
-        }
-
-        private ChangeInfo(ViewHolder oldHolder, ViewHolder newHolder,
-                           int fromX, int fromY, int toX, int toY) {
-            this(oldHolder, newHolder);
-            this.fromX = fromX;
-            this.fromY = fromY;
-            this.toX = toX;
-            this.toY = toY;
-        }
-
-        @Override
-        public String toString() {
-            return "ChangeInfo{" +
-                    "oldHolder=" + oldHolder +
-                    ", newHolder=" + newHolder +
-                    ", fromX=" + fromX +
-                    ", fromY=" + fromY +
-                    ", toX=" + toX +
-                    ", toY=" + toY +
-                    '}';
-        }
-    }
 
     @Override
     public void runPendingAnimations() {
@@ -231,6 +189,7 @@ abstract public class BaseItemAnimator extends SimpleItemAnimator {
                     public void onAnimationStart(View view) {
                         dispatchAddStarting(holder);
                     }
+
                     @Override
                     public void onAnimationCancel(View view) {
                         ViewCompat.setAlpha(view, 1);
@@ -289,6 +248,7 @@ abstract public class BaseItemAnimator extends SimpleItemAnimator {
             public void onAnimationStart(View view) {
                 dispatchMoveStarting(holder);
             }
+
             @Override
             public void onAnimationCancel(View view) {
                 if (deltaX != 0) {
@@ -298,6 +258,7 @@ abstract public class BaseItemAnimator extends SimpleItemAnimator {
                     ViewCompat.setTranslationY(view, 0);
                 }
             }
+
             @Override
             public void onAnimationEnd(View view) {
                 animation.setListener(null);
@@ -375,6 +336,7 @@ abstract public class BaseItemAnimator extends SimpleItemAnimator {
                 public void onAnimationStart(View view) {
                     dispatchChangeStarting(changeInfo.newHolder, false);
                 }
+
                 @Override
                 public void onAnimationEnd(View view) {
                     newViewAnimation.setListener(null);
@@ -408,6 +370,7 @@ abstract public class BaseItemAnimator extends SimpleItemAnimator {
             endChangeAnimationIfNecessary(changeInfo, changeInfo.newHolder);
         }
     }
+
     private boolean endChangeAnimationIfNecessary(ChangeInfo changeInfo, ViewHolder item) {
         boolean oldItem = false;
         if (changeInfo.newHolder == item) {
@@ -512,7 +475,7 @@ abstract public class BaseItemAnimator extends SimpleItemAnimator {
     }
 
     private void resetAnimation(ViewHolder holder) {
-        AnimatorCompatHelper.clearInterpolator(holder.itemView);
+//        AnimatorCompatHelper.clearInterpolator(holder.itemView);
         endAnimation(holder);
     }
 
@@ -634,14 +597,61 @@ abstract public class BaseItemAnimator extends SimpleItemAnimator {
         }
     }
 
+    private static class MoveInfo {
+        public ViewHolder holder;
+        public int fromX, fromY, toX, toY;
+
+        private MoveInfo(ViewHolder holder, int fromX, int fromY, int toX, int toY) {
+            this.holder = holder;
+            this.fromX = fromX;
+            this.fromY = fromY;
+            this.toX = toX;
+            this.toY = toY;
+        }
+    }
+
+    private static class ChangeInfo {
+        public ViewHolder oldHolder, newHolder;
+        public int fromX, fromY, toX, toY;
+
+        private ChangeInfo(ViewHolder oldHolder, ViewHolder newHolder) {
+            this.oldHolder = oldHolder;
+            this.newHolder = newHolder;
+        }
+
+        private ChangeInfo(ViewHolder oldHolder, ViewHolder newHolder,
+                           int fromX, int fromY, int toX, int toY) {
+            this(oldHolder, newHolder);
+            this.fromX = fromX;
+            this.fromY = fromY;
+            this.toX = toX;
+            this.toY = toY;
+        }
+
+        @Override
+        public String toString() {
+            return "ChangeInfo{" +
+                    "oldHolder=" + oldHolder +
+                    ", newHolder=" + newHolder +
+                    ", fromX=" + fromX +
+                    ", fromY=" + fromY +
+                    ", toX=" + toX +
+                    ", toY=" + toY +
+                    '}';
+        }
+    }
+
     private static class VpaListenerAdapter implements ViewPropertyAnimatorListener {
         @Override
-        public void onAnimationStart(View view) {}
+        public void onAnimationStart(View view) {
+        }
 
         @Override
-        public void onAnimationEnd(View view) {}
+        public void onAnimationEnd(View view) {
+        }
 
         @Override
-        public void onAnimationCancel(View view) {}
+        public void onAnimationCancel(View view) {
+        }
     }
 }

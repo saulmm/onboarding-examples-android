@@ -19,20 +19,17 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.databinding.DataBindingUtil;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ViewCompat;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.saulmm.splashes.databinding.ActivityOnboardingPlaceholderBinding;
 import com.example.saulmm.splashes.databinding.ItemCardBinding;
@@ -45,7 +42,13 @@ public class OnboardingWithPlaceholderActivity extends AppCompatActivity {
     private int mContentViewHeight;
 
     private ActivityOnboardingPlaceholderBinding mBinding;
-    private RecyclerAdapter mAdapter = new RecyclerAdapter();;
+    private RecyclerAdapter mAdapter = new RecyclerAdapter();
+
+    private static int getToolbarHeight(Context context) {
+        final TypedValue tv = new TypedValue();
+        context.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true);
+        return TypedValue.complexToDimensionPixelSize(tv.data, context.getResources().getDisplayMetrics());
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,18 +56,18 @@ public class OnboardingWithPlaceholderActivity extends AppCompatActivity {
 
         // Fake a long startup time
         new Handler().postDelayed(this::onFakeCreate, getResources()
-            .getInteger(android.R.integer.config_mediumAnimTime));
+                .getInteger(android.R.integer.config_mediumAnimTime));
     }
 
     private void onFakeCreate() {
         setTheme(R.style.AppTheme);
 
         mBinding = DataBindingUtil.setContentView(this,
-            R.layout.activity_onboarding_placeholder);
+                R.layout.activity_onboarding_placeholder);
 
         ViewCompat.animate(mBinding.textTitle)
-            .alpha(1)
-            .start();
+                .alpha(1)
+                .start();
 
         mBinding.recycler.setLayoutManager(new LinearLayoutManager(this));
         mBinding.recycler.setItemAnimator(ItemAnimatorFactory.slidein());
@@ -79,18 +82,18 @@ public class OnboardingWithPlaceholderActivity extends AppCompatActivity {
 
                 // Animate fab
                 ViewCompat.animate(mBinding.fab)
-                    .setStartDelay(getResources().getInteger(android.R.integer.config_mediumAnimTime))
-                    .setDuration(getResources().getInteger(android.R.integer.config_shortAnimTime))
-                    .scaleY(1)
-                    .scaleX(1)
-                    .start();
+                        .setStartDelay(getResources().getInteger(android.R.integer.config_mediumAnimTime))
+                        .setDuration(getResources().getInteger(android.R.integer.config_shortAnimTime))
+                        .scaleY(1)
+                        .scaleX(1)
+                        .start();
             });
         });
     }
 
     private void startCollapseToolbarAnimation(Runnable onCollapseEnd) {
         final ValueAnimator valueHeightAnimator = ValueAnimator
-            .ofInt(mContentViewHeight, getToolbarHeight(this));
+                .ofInt(mContentViewHeight, getToolbarHeight(this));
 
         valueHeightAnimator.addUpdateListener(animation -> {
             ViewGroup.LayoutParams lp = mBinding.toolbar.getLayoutParams();
@@ -115,7 +118,7 @@ public class OnboardingWithPlaceholderActivity extends AppCompatActivity {
         @Override
         public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             final ItemCardBinding binding = ItemCardBinding.inflate(LayoutInflater
-                .from(parent.getContext()), parent, false);
+                    .from(parent.getContext()), parent, false);
 
             return new RecyclerViewHolder(binding);
         }
@@ -132,7 +135,7 @@ public class OnboardingWithPlaceholderActivity extends AppCompatActivity {
         }
 
         @Override
-        public int getItemCount()    {
+        public int getItemCount() {
             return mItems.size();
         }
 
@@ -150,11 +153,5 @@ public class OnboardingWithPlaceholderActivity extends AppCompatActivity {
                 mBinding.imgSampleimage.setImageResource(modelItem.imgId);
             }
         }
-    }
-
-    private static int getToolbarHeight(Context context) {
-        final TypedValue tv = new TypedValue();
-        context.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true);
-        return TypedValue.complexToDimensionPixelSize(tv.data, context.getResources().getDisplayMetrics());
     }
 }

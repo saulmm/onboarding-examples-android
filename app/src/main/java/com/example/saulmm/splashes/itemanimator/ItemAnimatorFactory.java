@@ -15,8 +15,9 @@
  */
 package com.example.saulmm.splashes.itemanimator;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.animation.DecelerateInterpolator;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 public class ItemAnimatorFactory {
 
