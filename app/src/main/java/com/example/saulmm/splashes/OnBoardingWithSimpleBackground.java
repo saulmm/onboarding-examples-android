@@ -17,9 +17,9 @@ package com.example.saulmm.splashes;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class OnBoardingWithSimpleBackground extends AppCompatActivity {
 
